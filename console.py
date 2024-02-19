@@ -10,6 +10,7 @@ from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.review import Review
+import re
 
 
 class HBNBCommand(cmd.Cmd):
@@ -118,10 +119,30 @@ class HBNBCommand(cmd.Cmd):
         if not args:
             print("** class name missing **")
             return
-        elif args not in HBNBCommand.classes:
+
+        _cls = args.split(" ")[0]
+        args = args.split(" ")[1:]
+
+        if _cls not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
-        new_instance = HBNBCommand.classes[args]()
+
+        kwargs = {}
+        for param in args:
+            name, value = tuple(param.split("="))
+
+            if re.match(r"-?\d+\.\d+", value):
+                value = float(value)
+            elif re.match(r"\d+", value):
+                value = int(value)
+            else:
+                if "\"" in value:
+                    value = value.replace('"', '\"')
+                value = value.replace("_", " ")
+            kwargs[name] = value
+         
+        new_instance = HBNBCommand.classes[_cls]()
+        new_instance.__dict__.update(kwargs)
         storage.save()
         print(new_instance.id)
         storage.save()
