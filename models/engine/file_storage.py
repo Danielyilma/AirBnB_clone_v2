@@ -13,18 +13,18 @@ class FileStorage:
         if cls is None:
             return FileStorage.__objects
         else:
-            result = dict()
+            res = dict()
             for key in self.__objects.keys():
-                result[key] = self.__objects[key]
-            return result
+                res[key] = self.__objects[key]
+            return res
 
     def delete(self, obj=None):
         '''delete object from __objects'''
         if obj is None:
             return
-        key = type(obj).__name__ + "." + obj.id
-        if key in self.__objects.keys():
-            del self.__objects[key]
+        obj_key = type(obj).__name__ + "." + obj.id
+        if obj_key in self.__objects:
+            del self.__objects[obj_key]
 
     def new(self, obj):
         """Adds new object to storage dictionary"""
