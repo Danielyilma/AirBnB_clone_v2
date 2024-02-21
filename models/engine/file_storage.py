@@ -13,10 +13,10 @@ class FileStorage:
         if cls is None:
             return FileStorage.__objects
         else:
-            res = dict()
+            result = dict()
             for key in self.__objects.keys():
-                res[key] = self.__objects[key]
-            return res
+                result[key] = self.__objects[key]
+            return result
 
     def delete(self, obj=None):
         '''delete object from __objects'''
