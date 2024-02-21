@@ -15,7 +15,8 @@ class FileStorage:
         else:
             result = dict()
             for key in self.__objects.keys():
-                result[key] = self.__objects[key]
+                if key.split(".")[0] == cls:
+                    result[key] = self.__objects[key]
             return result
 
     def delete(self, obj=None):
