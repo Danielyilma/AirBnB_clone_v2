@@ -2,8 +2,7 @@
 import unittest
 import MySQLdb
 from os import getenv
-from models.engine.db_storage\
-import DBStorage
+from models.engine.db_storage import DBStorage
 from models.state import State
 from models.city import City
 
@@ -21,7 +20,7 @@ class Test_db_storage(unittest.TestCase):
         self.cursor = self.conn.cursor()
         self.storage = DBStorage()
         self.storage.reload()
-    
+
     def tearDown(self) -> None:
         self.cursor.close()
         self.conn.close()
