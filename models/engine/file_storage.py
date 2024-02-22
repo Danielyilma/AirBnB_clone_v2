@@ -15,7 +15,7 @@ class FileStorage:
         else:
             result = dict()
             for key in self.__objects.keys():
-                if key.split(".")[0] == cls:
+                if key.split(".")[0] == cls.__name__:
                     result[key] = self.__objects[key]
             return result
 
