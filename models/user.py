@@ -9,13 +9,19 @@ class User(BaseModel, Base):
     """This class defines a user by various attributes"""
     __tablename__ = 'users'
 
-    first_name = Column(String(128))
-    last_name = Column(String(128))
     email = Column(String(128), nullable=False)
     password = Column(String(128), nullable=False)
-    places = relationship("Place",
-                          cascade='all, delete, delete-orphan',
-                          backref="user")
+    first_name = Column(String(128))
+    last_name = Column(String(128))
 
-    reviews = relationship("Review", cascade='all, delete, delete-orphan',
-                           back_ref='user')
+    places = relationship(
+        'Place',
+        cascade='all, delete, delete-orphan',
+        back_populates='user'
+    )
+
+    reviews = relationship(
+        'Review',
+        cascade='all, delete, delete-orphan',
+        back_populates='user'
+    )
