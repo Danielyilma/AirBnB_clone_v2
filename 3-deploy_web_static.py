@@ -1,12 +1,12 @@
 #!/usr/bin/python3
 """
-The `do_deploy` function deploys a compressed archive to a remote
-server and creates symbolic links for the current deployment.
+The Python script contains functions for creating a compressed archive of
+a directory, deploying it to a remote server, and creating symbolic links
+for the deployment.
 """
 from fabric.api import env, put, run, sudo, local
-import os
 from datetime import datetime
-
+import os
 
 env.hosts = ['54.237.124.13', '34.207.120.149']
 
@@ -57,3 +57,11 @@ releases/{filename}')
     except Exception as f:
         return False
     return True
+
+
+def deploy():
+    '''distributing the archive and deploying the web static fils'''
+    archive_name = do_pack()
+    if not archive_name:
+        return False
+    return do_deploy(archive_name)
