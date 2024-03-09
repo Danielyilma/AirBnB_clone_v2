@@ -26,6 +26,7 @@ printf "server {
     listen 80;
 
     index index.html index.htm;
+    add_header X-Served-By \$hostname;
     
     location /hbnb_static {
         alias /data/web_static/current/;
@@ -33,4 +34,7 @@ printf "server {
     }
 }
 " > /etc/nginx/sites-available/default
+sudo rm -rf /etc/nginx/sites-enabled/default
+ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+
 service nginx restart

@@ -3,7 +3,7 @@
 The function `do_pack` creates a compressed archive of the 'web_static'
 folder with a timestamp in the filename.
 """
-from fabric.api import *
+from fabric.api import local
 from datetime import datetime
 import os
 
