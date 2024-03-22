@@ -10,7 +10,7 @@ app = Flask(__name__)
 @app.route('/<name>', strict_slashes=False)
 def hello(name=None):
     '''root route handle'''
-    return f'HBNB' if name else f'hello HBNB!'
+    return f'HBNB' if name else f'Hello HBNB!'
 
 
 if __name__ == '__main__':
