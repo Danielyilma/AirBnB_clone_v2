@@ -31,6 +31,11 @@ class DBStorage:
             Base.metadata.drop_all(bind=self.__engine)
 
     def all(self, cls=None):
+        """
+        This function retrieves all instances of a given class
+        or all classes from a database session and stores them
+        in a dictionary with keys formatted as "ClassName.instance_id".
+        """
         result = {}
         key = ''
         if cls is None:
@@ -49,17 +54,21 @@ class DBStorage:
         return result
 
     def new(self, obj):
+        '''adding object to the session before commiting'''
         self.__session.add(obj)
 
     def save(self):
+        '''saving object to the database'''
         self.__session.commit()
 
     def delete(self, obj=None):
+        '''deleting object'''
         if obj is not None:
             self.__session.delete(obj)
         return
 
     def reload(self):
+        '''createing sesssion instance to interact to the database'''
         Base.metadata.create_all(self.__engine)
         Scope_session = sessionmaker(
             bind=self.__engine, expire_on_commit=False
@@ -68,4 +77,5 @@ class DBStorage:
         self.__session = Session()
 
     def close(self):
+        '''close the session instance and closing the connection'''
         self.__session.close()
