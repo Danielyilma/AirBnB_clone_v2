@@ -14,7 +14,7 @@ class State(BaseModel, Base):
     cities = relationship(
         'City', cascade='all ,delete, delete-orphan',
         back_populates='state'
-    )    
+    )
 
     if os.getenv('HBNB_TYPE_STORAGE') != 'db':
         @property
