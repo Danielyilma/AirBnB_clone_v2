@@ -23,7 +23,11 @@ class BaseModel:
             self.updated_at = datetime.now()
         else:
             from os import getenv
-            if getenv('HBNB_TYPE_STORAGE') != 'db':
+            if 'created_at' not in kwargs.keys():
+                self.id = str(uuid.uuid4())
+                self.created_at = datetime.now()
+                self.updated_at = datetime.now()
+            elif getenv('HBNB_TYPE_STORAGE') != 'db':
                 kwargs['updated_at'] = datetime.strptime(
                     kwargs['updated_at'], '%Y-%m-%dT%H:%M:%S.%f'
                 )
@@ -32,10 +36,6 @@ class BaseModel:
                 )
                 del kwargs['__class__']
 
-            if 'created_at' not in kwargs.keys():
-                self.id = str(uuid.uuid4())
-                self.created_at = datetime.now()
-                self.updated_at = datetime.now()
 
             for key,  value in kwargs.items():
                 setattr(self, key, value)
@@ -43,8 +43,9 @@ class BaseModel:
     def __str__(self):
         """Returns a string representation of the instance"""
         cls = (str(type(self)).split('.')[-1]).split('\'')[0]
-        self.to_dict()
-        return '[{}] ({}) {}'.format(cls, self.id, self.__dict__)
+        sdict = self.__dict__.copy()
+        sdict.pop("_sa_instance_state", None)
+        return '[{}] ({}) {}'.format(cls, self.id, sdict)
 
     def save(self):
         """Updates updated_at with current time when instance is changed"""
@@ -62,9 +63,10 @@ class BaseModel:
                 {'__class__': (str(type(self)).split('.')[-1]).split('\'')[0]}
             )
 
-        if "_sa_instance_state" in self.__dict__.keys():
-            del self.__dict__["_sa_instance_state"]
         dictionary.update(self.__dict__)
+        if "_sa_instance_state" in dictionary.keys():
+            del dictionary["_sa_instance_state"]
+
         dictionary['created_at'] = self.created_at.isoformat()
         dictionary['updated_at'] = self.updated_at.isoformat()
         return dictionary
