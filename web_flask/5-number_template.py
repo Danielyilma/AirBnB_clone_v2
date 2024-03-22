@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 '''flask application'''
-from flask import Flask
+from flask import Flask, render_template
 
 
 app = Flask(__name__)
@@ -29,6 +29,16 @@ def display_text(text):
 def display_text2(text):
     text = text.replace('_', ' ')
     return f'Python {text}'
+
+
+@app.route('/number/<int:n>', strict_slashes=False)
+def display_number(n):
+    return f'{n} is a number'
+
+
+@app.route('/number_template/<int:n>', strict_slashes=False)
+def render_html(n):
+    return render_template('5-number.html', n=n)
 
 
 if __name__ == '__main__':

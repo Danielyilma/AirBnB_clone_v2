@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 '''flask application'''
-from flask import Flask
+from flask import Flask, render_template
 
 
 app = Flask(__name__)
@@ -19,7 +19,7 @@ def hello_hbnb():
 
 
 @app.route('/c/<text>')
-def display_text(text):
+def diplay_text(text):
     text = text.replace('_', ' ')
     return f'C {text}'
 
@@ -29,6 +29,21 @@ def display_text(text):
 def display_text2(text):
     text = text.replace('_', ' ')
     return f'Python {text}'
+
+
+@app.route('/number/<int:n>', strict_slashes=False)
+def display_number(n):
+    return f'{n} is a number'
+
+
+@app.route('/number_template/<int:n>', strict_slashes=False)
+def render_html(n):
+    return render_template('5-number.html', n=n)
+
+
+@app.route('/number_odd_or_even/<int:n>', strict_slashes=False)
+def render_odd_or_even(n):
+    return render_template('6-number_odd_or_even.html', n=n)
 
 
 if __name__ == '__main__':

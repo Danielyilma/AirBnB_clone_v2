@@ -19,9 +19,21 @@ def hello_hbnb():
 
 
 @app.route('/c/<text>')
-def display_text(text):
+def diplay_text(text):
     text = text.replace('_', ' ')
     return f'C {text}'
+
+
+@app.route('/python/', defaults={'text': 'is cool'}, strict_slashes=False)
+@app.route('/python/<text>', strict_slashes=False)
+def display_text2(text):
+    text = text.replace('_', ' ')
+    return f'Python {text}'
+
+
+@app.route('/number/<int:n>', strict_slashes=False)
+def display_number(n):
+    return f'{n} is a number'
 
 
 if __name__ == '__main__':
