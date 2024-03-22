@@ -18,5 +18,18 @@ def hello_hbnb():
     return "HBNB"
 
 
+@app.route('/c/<text>')
+def diplay_text(text):
+    text = text.replace('_', ' ')
+    return f'C {text}'
+
+
+@app.route('/python/', defaults={'text': 'is cool'}, strict_slashes=False)
+@app.route('/python/<text>', strict_slashes=False)
+def diaplay_text2(text):
+    text = text.replace('_', ' ')
+    return f'Python {text}'
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)

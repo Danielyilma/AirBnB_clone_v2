@@ -17,6 +17,7 @@ def hello_hbnb():
     '''handles /hbnb routes'''
     return "HBNB"
 
+
 @app.route('/c/<text>')
 def diplay_text(text):
     text = text.replace('_', ' ')
