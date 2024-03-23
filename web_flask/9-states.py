@@ -15,7 +15,6 @@ def list_states():
     return render_template('7-states_list.html', states=states)
 
 
-
 @app.route('/states/<id>', strict_slashes=False)
 def states_id(id):
     '''states list end point'''
