@@ -27,7 +27,7 @@ def states_id(id):
 
 
 @app.teardown_appcontext
-def teardown_storage(exception):
+def teardown_storage(exception=None):
     storage.close()
 
 
